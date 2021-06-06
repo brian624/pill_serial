@@ -103,9 +103,9 @@ void usbuart_init(void)
 	rcc_periph_clock_enable(RCC_TIM2);
 	rcc_periph_clock_enable(RCC_TIM3);
 	rcc_periph_clock_enable(RCC_TIM4);
-	timer_reset(TIM2);
-	timer_reset(TIM3);
-	timer_reset(TIM4);
+	//timer_reset(TIM2);
+	//timer_reset(TIM3);
+	//timer_reset(TIM4);
 	timer_set_mode(TIM2, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
 	timer_set_mode(TIM3, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
 	timer_set_mode(TIM4, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);

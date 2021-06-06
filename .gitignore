@@ -7,3 +7,4 @@
 *.elf
 src/version.h
 src/mapfile
+.vscode/settings.json

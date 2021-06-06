@@ -500,7 +500,7 @@ static void cdcacm_set_config(usbd_device *dev, uint16_t wValue)
 	usbd_register_control_callback(dev,
 			USB_REQ_TYPE_CLASS | USB_REQ_TYPE_INTERFACE,
 			USB_REQ_TYPE_TYPE | USB_REQ_TYPE_RECIPIENT,
-			cdcacm_control_request);
+			(usbd_control_callback)cdcacm_control_request);
 
 	/* Notify the host that DCD is asserted.
 	 * Allows the use of /dev/tty* devices on *BSD/MacOS
