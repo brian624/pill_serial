@@ -39,11 +39,12 @@ else
 LDFLAGS += --specs=nosys.specs
 endif
 
-all:	version.h  pill_serial.elf 	
+all:	version.h  pill_serial.elf 	pill_serial.bin
 
 
 host_clean:
 	-$(Q)$(RM) pill_serial.elf
+	-$(Q)$(RM) pill_serial.bin
 
 OBJS = $(SRC:.c=.o)
 
