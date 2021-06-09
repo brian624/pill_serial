@@ -19,7 +19,7 @@ RUN git config --global user.name "ME IN IMAGE"
 RUN git init .  
 RUN git add --all 
 RUN git commit -m "git init inside image"
-
+RUN git submodule add https://github.com/libopencm3/libopencm3
 
 
 
