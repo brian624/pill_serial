@@ -60,21 +60,21 @@ void usbuart_init(void)
 	gpio_set_mode(GPIOB, GPIO_MODE_OUTPUT_2_MHZ, GPIO_CNF_OUTPUT_ALTFN_PUSHPULL, GPIO10);
 
 	/* Setup UART parameters. */
-	usart_set_baudrate(USART1, 38400);
+	usart_set_baudrate(USART1, 115200);
 	usart_set_databits(USART1, 8);
 	usart_set_stopbits(USART1, USART_STOPBITS_1);
 	usart_set_mode(USART1, USART_MODE_TX_RX);
 	usart_set_parity(USART1, USART_PARITY_NONE);
 	usart_set_flow_control(USART1, USART_FLOWCONTROL_NONE);
 
-	usart_set_baudrate(USART2, 38400);
+	usart_set_baudrate(USART2, 115200);
 	usart_set_databits(USART2, 8);
 	usart_set_stopbits(USART2, USART_STOPBITS_1);
 	usart_set_mode(USART2, USART_MODE_TX_RX);
 	usart_set_parity(USART2, USART_PARITY_NONE);
 	usart_set_flow_control(USART2, USART_FLOWCONTROL_NONE);
 
-	usart_set_baudrate(USART3, 38400);
+	usart_set_baudrate(USART3, 115200);
 	usart_set_databits(USART3, 8);
 	usart_set_stopbits(USART3, USART_STOPBITS_1);
 	usart_set_mode(USART3, USART_MODE_TX_RX);
@@ -103,19 +103,19 @@ void usbuart_init(void)
 	rcc_periph_clock_enable(RCC_TIM2);
 	rcc_periph_clock_enable(RCC_TIM3);
 	rcc_periph_clock_enable(RCC_TIM4);
-	timer_reset(TIM2);
-	timer_reset(TIM3);
-	timer_reset(TIM4);
+	//timer_reset(TIM2);
+	//timer_reset(TIM3);
+	//timer_reset(TIM4);
 	timer_set_mode(TIM2, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
 	timer_set_mode(TIM3, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
 	timer_set_mode(TIM4, TIM_CR1_CKD_CK_INT, TIM_CR1_CMS_EDGE, TIM_CR1_DIR_UP);
 
 	timer_set_prescaler(TIM2,
-			rcc_apb2_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
+			rcc_apb1_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
 	timer_set_prescaler(TIM3,
-			rcc_apb2_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
+			rcc_apb1_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
 	timer_set_prescaler(TIM4,
-			rcc_apb2_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
+			rcc_apb1_frequency / USBUART_TIMER_FREQ_HZ * 2 - 1);
 
 	timer_set_period(TIM2,
 			USBUART_TIMER_FREQ_HZ / USBUART_RUN_FREQ_HZ - 1);

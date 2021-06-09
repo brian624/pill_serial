@@ -65,7 +65,7 @@ void platform_request_boot(void);
 #define BOARD_IDENT       "Black Magic Probe (STLINK), (Firmware " FIRMWARE_VERSION ")"
 #define UPD_IFACE_STRING  "@Internal Flash   /0x08000000/8*001Kg"
 
-#define LED_PORT	GPIOA
+#define LED_PORT	GPIOC
 /* Use PC13 for a "dummy" uart led. So we can observe the LED. */
 #define LED_PORT_UART	GPIOC
 #define LED_UART	GPIO13
