@@ -48,7 +48,7 @@ static const struct usb_device_descriptor dev = {
 	.bDeviceClass = 0xEF,		/* Miscellaneous Device */
 	.bDeviceSubClass = 2,		/* Common Class */
 	.bDeviceProtocol = 1,		/* Interface Association */
-	.bMaxPacketSize0 = 64,
+	.bMaxPacketSize0 = CDCACM_PACKET_SIZE,
 	.idVendor = 0x1D50,
 	.idProduct = 0x6018,
 	.bcdDevice = 0x0100,
@@ -418,7 +418,7 @@ static const char *usb_strings[] = {
 	"Black Magic UART Port",
 };
 
-static int cdcacm_control_request(usbd_device *dev,
+static enum usbd_request_return_codes cdcacm_control_request(usbd_device *dev,
 		struct usb_setup_data *req, uint8_t **buf, uint16_t *len,
 		void (**complete)(usbd_device *dev, struct usb_setup_data *req))
 {
@@ -431,26 +431,26 @@ static int cdcacm_control_request(usbd_device *dev,
 	case USB_CDC_REQ_SET_CONTROL_LINE_STATE:
 		cdcacm_set_modem_state(dev, req->wIndex, true, true);
 		/* Ignore since is not for GDB interface */
-        return 1;
+        return USBD_REQ_HANDLED;
 	case USB_CDC_REQ_SET_LINE_CODING:
 		if(*len < sizeof(struct usb_cdc_line_coding))
-			return 0;
+			return USBD_REQ_NOTSUPP;
 
 		switch(req->wIndex) {
 		case 0:
 			usbuart_set_line_coding((struct usb_cdc_line_coding*)*buf, USART2);
-			return 1;
+			return USBD_REQ_HANDLED;
 		case 2:
 			usbuart_set_line_coding((struct usb_cdc_line_coding*)*buf, USART3);
-			return 1;
+			return USBD_REQ_HANDLED;
 		case 4:
 			usbuart_set_line_coding((struct usb_cdc_line_coding*)*buf, USART1);
-			return 1;
+			return USBD_REQ_HANDLED;
 		default:
-			return 0;
+			return USBD_REQ_NOTSUPP;
 		}
 	}
-	return 0;
+	return USBD_REQ_NOTSUPP;
 }
 
 int cdcacm_get_config(void)
@@ -500,7 +500,7 @@ static void cdcacm_set_config(usbd_device *dev, uint16_t wValue)
 	usbd_register_control_callback(dev,
 			USB_REQ_TYPE_CLASS | USB_REQ_TYPE_INTERFACE,
 			USB_REQ_TYPE_TYPE | USB_REQ_TYPE_RECIPIENT,
-			(usbd_control_callback)cdcacm_control_request);
+			cdcacm_control_request);
 
 	/* Notify the host that DCD is asserted.
 	 * Allows the use of /dev/tty* devices on *BSD/MacOS

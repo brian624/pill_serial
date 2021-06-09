@@ -28,7 +28,11 @@
 
 #include <libopencm3/usb/usbd.h>
 
-#define CDCACM_PACKET_SIZE 	64
+//stm32f103 in the bluepill has only half the built in USB PMA memory space available to its USB 
+//peripheral than the stm32f4 originally targeted,  hence the 6 bulk endpoints use
+// too much memory at 64 bytes each.  Reduced to 32 and change config to show max packet
+// as 32
+#define CDCACM_PACKET_SIZE 	32
 
 extern usbd_device *usbdev;
 
